@@ -17,9 +17,8 @@ data_currency = company.info['currency']
 print("This stock trades in:", data_currency)
 budget = int(input("Enter how much money you want to invest :"))
 
-data.columns = data.columns.get_level_values(0) #gets rid of the ticker header , was having trouble with S0 not being read as a single number, this line deletes the row saying RKLB so we just get clean columns of numbers
+data.columns = data.columns.get_level_values(0) 
 
-#Show first few rows
 print(data.head())
 
 #Calculate daily return
@@ -28,7 +27,7 @@ print(data['Return'])
 
 
 clean_returns = data['Return'].dropna()
-returns_array = clean_returns.to_numpy()   # tolist() also works here
+returns_array = clean_returns.to_numpy()   
 
 
 # print(returns_array)
@@ -53,7 +52,7 @@ for day_index, daily_return in enumerate(returns_array):
         best_end = day_index
         best_start = current_start
 
-buy_date = clean_returns.index[best_start]   # pandas have the dates attached as an index
+buy_date = clean_returns.index[best_start]   
 sell_date = clean_returns.index[best_end]
 actual_return = budget * (1 + best_trade)
 
@@ -80,31 +79,28 @@ print("sell on Day:", sell_date)
 
 import matplotlib.pyplot as plt
 
-# --- BUILDING THE GRAPH ---
 
 
 
-buy_price = data['Close'].loc[buy_date] # loc "locates" the date
+
+buy_price = data['Close'].loc[buy_date] 
 sell_price = data['Close'].loc[sell_date]
 
-# 2. Draw the main 1-year stock timeline
-# We plot the Date (Index) on the X-axis, and the Price on the Y-axis
+
 plt.plot(data.index, data['Close'], label="Stock Price", color="blue", alpha=0.5)
 
-# 3. Paint the Target Dots
-# plt.scatter drops a specific dot on the graph. 
-# marker="^" makes an up-arrow, marker="v" makes a down-arrow
+
 plt.scatter(buy_date, buy_price, color="green", s=150, marker="^", label="BUY IN")
 plt.scatter(sell_date, sell_price, color="red", s=150, marker="v", label="SELL OUT")
 
-# 4. Add the Polish
+
 plt.title(f"{ticker} - Maximum Subarray Trade")
 plt.xlabel("Date")
 plt.ylabel(f"Price ({symbol})")
 plt.legend()
 plt.grid(True, linestyle="--", alpha=0.6)
 
-# 5. Show the masterpiece!
+
 plt.show()
         
     

@@ -1,2 +1,3 @@
 # Maximum-Subarray-of-Real-Stock-Returns
-Uses real stock data and finds the period of best continuous growth
+
+This code uses Kadane's algorithm to find the best period of continuous growth in the stock market.
